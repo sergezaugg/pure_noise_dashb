@@ -20,27 +20,27 @@ select_stored_scenario()
 
 
 
-if len(ss["upar"]["par02"]) > 0:
-    nnoi_ops =  [1, 3, 5, 10, 30, 50, 100, 300, 500, 1000, 3000]
-    _ = st.segmented_control("Nb noisy features", options=nnoi_ops, selection_mode="multi", key="wid03", on_change=update_ss, args=["wid03", "par03"],)
-    max_feat_ops = np.arange(1,30,1)
-    _ = st.select_slider("RFO max features", options=max_feat_ops, value=1, key="wid04", on_change=update_ss, args=["wid04", "par04"],)
-    _ = st.slider("RFO n trees", min_value=1, max_value=30, value=10, step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
+# if len(ss["upar"]["par02"]) > 0:
+#     nnoi_ops =  [1, 3, 5, 10, 30, 50, 100, 300, 500, 1000, 3000]
+#     _ = st.segmented_control("Nb noisy features", options=nnoi_ops, selection_mode="multi", key="wid03", on_change=update_ss, args=["wid03", "par03"],)
+#     max_feat_ops = np.arange(1,30,1)
+#     _ = st.select_slider("RFO max features", options=max_feat_ops, value=1, key="wid04", on_change=update_ss, args=["wid04", "par04"],)
+#     _ = st.slider("RFO n trees", min_value=1, max_value=30, value=10, step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
                      
-    with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
-        submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = True)  
-        if submitted3:
-            resu01 = evaluate_scenarios_rfo(sce = ss['di_li'][ss["upar"]["par02"]], 
-                nb_noisy_features = ss["upar"]["par03"],  
-                rfo_max_features = ss["upar"]["par04"], 
-                ntrees = ss["upar"]["par05"], 
-                )
-            # include some metadata and scenario
-            df = resu01['df_result']
-            df['scenario'] = ss["upar"]["par02"]
-            df['run_nb'] = ss['run_nb']
-            ss['run_nb'] += 1
-            ss['resu'].append(df)
+#     with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
+#         submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = True)  
+#         if submitted3:
+#             resu01 = evaluate_scenarios_rfo(sce = ss['di_li'][ss["upar"]["par02"]], 
+#                 nb_noisy_features = ss["upar"]["par03"],  
+#                 rfo_max_features = ss["upar"]["par04"], 
+#                 ntrees = ss["upar"]["par05"], 
+#                 )
+#             # include some metadata and scenario
+#             df = resu01['df_result']
+#             df['scenario'] = ss["upar"]["par02"]
+#             df['run_nb'] = ss['run_nb']
+#             ss['run_nb'] += 1
+#             ss['resu'].append(df)
 
 
 
