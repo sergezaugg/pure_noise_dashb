@@ -26,8 +26,11 @@ if 'upar' not in ss:
     ss["upar"] = {
         "par01" : 1000,
         "par02" : {},
-        "par03" : [0,1], 
+        "par03" : [1,10,100,1000], 
         "par04" : 1, 
+        "par05" : 10, 
+        "par10" : 500, 
+        "par11" : 500, 
         }
 
 if 'resu' not in ss:
