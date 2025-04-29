@@ -161,8 +161,12 @@ def plot_scenarios(scenarios_di, width = 450, height = 450,):
     """
     """
     mvn_params = scenarios_di
+
+    
     tit_str = 'Class A: N=' + str(mvn_params['n1']) + '   Class B: N=' + str(mvn_params['n2'])
     df = make_dataset(params = mvn_params, n_noisy_features = 0) 
+
+
     fig1 = px.scatter(
         data_frame = df,
         x = 'f01',

@@ -18,21 +18,19 @@ init_distr =  {
 if 'distr' not in ss:
     ss['distr'] = init_distr
 
-
 if 'di_li' not in ss:
     ss['di_li'] = {}
+    ss['di_li']['empty'] = {}
 
-
-
-# initial value of session state
 if 'upar' not in ss:
     ss["upar"] = {
         "par01" : 1000,
-        "par02" : 2,
+        "par02" : {},
         "par03" : 0.20, 
         }
 
-
+if 'resu' not in ss:
+    ss['resu'] = []
 
 
 
