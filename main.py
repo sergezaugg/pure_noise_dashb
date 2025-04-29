@@ -6,7 +6,7 @@
 from utils import evaluate_scenarios_rfo, plot_scenarios
 import os
 
-random_seed = 557
+# random_seed = 557
 path_save_figures = "./saved_figures_temp"
 N = 3000
 
@@ -48,13 +48,13 @@ fig00.show()
 nb_noisy_features = [0, 1, 5, 10, 50, 100]
 nb_trees = 10
 
-resu01 = evaluate_scenarios_rfo(sce = scedi[sce_nam02], nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, rfo_max_features = 1, seed = random_seed)
+resu01 = evaluate_scenarios_rfo(sce = scedi[sce_nam02], nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, rfo_max_features = 1)
 
 
 nb_noisy_features = [0, 1, 10, 50,]
 nb_trees = 11
 
-resu02 = evaluate_scenarios_rfo(sce = scedi[sce_nam02], nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, rfo_max_features = 5, seed = random_seed)
+resu02 = evaluate_scenarios_rfo(sce = scedi[sce_nam02], nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, rfo_max_features = 5)
 
 
 resu01['scenarios_di']

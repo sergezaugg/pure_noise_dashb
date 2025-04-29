@@ -11,8 +11,8 @@ st.set_page_config(layout="wide")
 
 
 init_distr =  {
-                'n1' : 200, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.5,
-                'n2' : 200, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : -0.5,
+                'n1' : 2000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.5,
+                'n2' : 2000, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : -0.5,
                 }
 
 if 'distr' not in ss:
@@ -26,14 +26,16 @@ if 'upar' not in ss:
     ss["upar"] = {
         "par01" : 1000,
         "par02" : {},
-        "par03" : 0.20, 
+        "par03" : [0,1], 
+        "par04" : 1, 
         }
 
 if 'resu' not in ss:
     ss['resu'] = []
 
 
-
+if 'run_nb' not in ss:
+    ss['run_nb'] = 0
 
 
 
@@ -60,7 +62,7 @@ pg = st.navigation(pages)
 pg.run()
 
 with st.sidebar:
-    st.text("v1.1.x - improvements underway")
+    st.text("v0.0.0 - bla")
     st.title(""); st.title(""); st.title(""); st.title(""); st.title(""); st.title(""); st.title("")
     st.title(""); st.title(""); st.title(""); st.title("") 
     st.markdown(''':gray[RELATED TOPICS]''')

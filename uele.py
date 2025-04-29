@@ -10,7 +10,7 @@ from utils import update_ss, plot_scenarios
 
 
 def select_distr_param():
-    with st.container(border=True, key='conta_01', height = 500):
+    with st.container(border=True, height = 400):
         CA, CB = st.columns([0.65, 0.35])
         with CA:
             st.text("Define distribution class A")
@@ -48,26 +48,34 @@ def select_distr_param():
                     }
             # define a name 
             with st.form("f02", border=False, clear_on_submit=True, enter_to_submit=False):
-                distr_name = st.text_input(key = "k013", label = "Give a name:", value = "")    
-                submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = True)     
-                if submitted_1:
-                    ss['di_li'][distr_name] = sce_temp
+                c1, c2, c3 = st.columns(3)  
+                with c1:
+                    distr_name = st.text_input(key = "k013", label = "Give a name:", value = "") 
+                with c2:   
+                    submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = True)  
+                if  len(distr_name) < 3:
+                    with c3:   
+                        st.info("Name must be > 2 charters")  
+                else:    
+                    if submitted_1:
+                        ss['di_li'][distr_name] = sce_temp
 
         with CB:
             st.text("Preview")
-            fig01 = plot_scenarios(scenarios_di = sce_temp, width = 500, height = 400)
+            fig01 = plot_scenarios(scenarios_di = sce_temp, width = 450, height = 350)
             st.plotly_chart(fig01, use_container_width=False, key='fig01')
 
       
 
 
 def select_stored_scenario():
-    CA, CB = st.columns([0.50, 0.50])
-    with CA:
-        _ = st.selectbox('Select', options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])    
-    with CB:
-        if len(ss["upar"]["par02"]) > 0:
-            fig00 = plot_scenarios(scenarios_di = ss['di_li'][ss["upar"]["par02"]], width = 450, height = 450)
-            st.plotly_chart(fig00, use_container_width=False, key='fig00')
+    with st.container(border=True, height = 400):
+        CA, CB = st.columns([0.50, 0.50])
+        with CA:
+            _ = st.selectbox('Select', options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])    
+        with CB:
+            if len(ss["upar"]["par02"]) > 0:
+                fig00 = plot_scenarios(scenarios_di = ss['di_li'][ss["upar"]["par02"]], width = 450, height = 350)
+                st.plotly_chart(fig00, use_container_width=False, key='fig00')
 
 

@@ -77,21 +77,20 @@ def make_dataset(params, n_noisy_features):
 
 
 # @st.cache_data
-def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features, seed):
+def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
     """
     """
     df_resu = []
     mvn_params = sce
     for counter, nb_noisfeat in enumerate(nb_noisy_features):
         # print(nb_noisfeat)
-        np.random.seed(seed=seed)
         df = make_dataset(params = mvn_params, n_noisy_features = int(nb_noisfeat)) 
         # select predictors and response 
         X = df.iloc[:,1:]
         y = df['class']
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.60)
         # initialize a model for supervised classification 
-        clf = RandomForestClassifier(n_estimators=ntrees, max_depth=30, max_features = rfo_max_features, random_state=seed)
+        clf = RandomForestClassifier(n_estimators=ntrees, max_depth=30, max_features = rfo_max_features)
         clf.fit(X_train, y_train)
         # get overall performance as ROC-AUC
         y_pred = clf.predict_proba(X_test)[:,1]
