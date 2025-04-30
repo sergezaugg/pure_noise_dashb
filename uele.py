@@ -58,7 +58,8 @@ def select_distr_param():
                     st.text("")   
                     submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = False)  
                 if  len(distr_name) < 3:
-                    with c3:   
+                    with c3: 
+                        st.text("")   
                         st.info("Name must be > 2 charters")  
                 else:    
                     if submitted_1:
@@ -66,7 +67,10 @@ def select_distr_param():
                         # delete initial key 
                         ss['di_li'].pop("Please create a scenario", None)
                         ss["upar"]["par02"] = distr_name
-                        # st.rerun()
+                        # get numerical index of newly created scenario name 
+                        # st.write(  np.where([a==distr_name for a in ss['di_li'].keys()])[0]  )
+                        ss['num_index_sce'] = np.where([a==distr_name for a in ss['di_li'].keys()])[0].item()
+
         with CB:
             st.text("Preview")
         with CC:
@@ -77,11 +81,10 @@ def select_distr_param():
 
 
 def select_stored_scenario():
-    with st.container(border=True): # , height = 500):
-        # CA, CB = st.columns([0.50, 0.50])
+    with st.container(border=True): 
         CA, CB, CC = st.columns([0.65, 0.10, 0.35])
         with CA:
-            _ = st.selectbox('Select a scenario', placeholder = "aa", options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
+            _ = st.selectbox('Select a scenario', index=ss['num_index_sce'], options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
 
             if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
                 nnoi_ops = 2**np.arange(0,13,1)
@@ -125,6 +128,7 @@ def prepare_results(li):
 
 @st.cache_data
 def make_plot(df, width, height):
+    plotcol_seq02 = ['#ff0000', '#ffff66', '#33ff00', '#00ffff', '#ffbb00', '#ff00ff', '#0077ff',]
     with st.container(border=True): 
         fig03 = px.line(
             data_frame = df,
@@ -141,8 +145,10 @@ def make_plot(df, width, height):
             markers = True,
             template = "plotly_dark",
             log_x = True, 
+            color_discrete_sequence = plotcol_seq02,
             )
         _ = fig03.update_layout(paper_bgcolor="#222222")
+        _ = fig03.update_layout(yaxis_range=[0.4,1.05])
         st.plotly_chart(fig03, use_container_width=False, key='fig03')
 
 

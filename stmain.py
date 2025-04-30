@@ -44,6 +44,9 @@ if 'dfresu' not in ss:
 if 'run_nb' not in ss:
     ss['run_nb'] = 0
 
+if 'num_index_sce' not in ss:
+    ss['num_index_sce'] = 0
+
 
 # main navigation 
 pages = [
