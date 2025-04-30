@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
+# from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 import streamlit as st
@@ -24,14 +24,14 @@ def update_ss(kname, ssname):
 
 
 
-def str_to_int_spec(s):
-    """
-    Description: transform string s to integer, if not possible return 0 (Zero)
-    """
-    try:
-        return(int(s))
-    except:
-        return(0)
+# def str_to_int_spec(s):
+#     """
+#     Description: transform string s to integer, if not possible return 0 (Zero)
+#     """
+#     try:
+#         return(int(s))
+#     except:
+#         return(0)
 
 
 def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):
@@ -74,8 +74,6 @@ def make_dataset(params, n_noisy_features):
     return(df)
 
 
-
-
 # @st.cache_data
 def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
     """
@@ -110,61 +108,14 @@ def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
     return(diresu)
 
 
-
-# @st.cache_data
-# def plot_performance_vs_n_features(li,  width = 500, height = 750):
-#     """
-#     """
-#     df  = li[0]
-#     par = li[1]
-#     # add small delt to 0 to allow log plot 
-#     df['nb_noisy_features'] = df['nb_noisy_features'].replace(to_replace=0, value=0.5)
-#     # plot 
-#     if par['model_type'] == 'RFO':
-#         pl_title = 'rfo_max_features: '  + str(par['rfo_max_features']) + '<br>' + 'rfo_nb_trees: ' + str(par['rfo_nb_trees'])
-#     if par['model_type'] == 'logitreg':
-#         pl_title = 'logistic C param: '  + str(par['logit_c_param']) 
-#     fig = px.line(
-#         data_frame = df,
-#         x = 'nb_noisy_features',
-#         y = 'resu_auc',
-#         color = 'scenario',
-#         width = width,
-#         height = height,
-#         markers=True,
-#         title = pl_title,
-#         template="plotly_dark",
-#         log_x = True,
-#         color_discrete_sequence = plotcol_seq02,
-#         )
-#     # dirty trick to be able to plot 0 on a logarithmic x axis 
-#     x_axis_num = fig['data'][0]['x']
-#     x_axis_str = x_axis_num.astype(int).astype(str)
-#     x_axis_str[0] = ' None (0)'
-#     fig.update_layout(xaxis = dict(tickmode='array', tickvals = x_axis_num, ticktext = x_axis_str,))
-#     # usual layout stuff
-#     _ = fig.update_layout(xaxis_title="Nb of pure-noise-features", yaxis_title="Predictive performance (AUC)")
-#     _ = fig.update_layout(legend=dict(orientation="h", yanchor="bottom", y=-0.50, xanchor="left", x=0, font=dict(size=15)))
-#     _ = fig.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
-#     _ = fig.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
-#     _ = fig.update_layout(paper_bgcolor="#111122")
-#     _ = fig.update(layout_showlegend = False)
-#     # return fig object
-#     return(fig)
-
-
-
-
 # # @st.cache_data
 def plot_scenarios(scenarios_di, width = 450, height = 450,):
     """
     """
     mvn_params = scenarios_di
 
-    
     tit_str = 'Class A: N=' + str(mvn_params['n1']) + '   Class B: N=' + str(mvn_params['n2'])
     df = make_dataset(params = mvn_params, n_noisy_features = 0) 
-
 
     fig1 = px.scatter(
         data_frame = df,
