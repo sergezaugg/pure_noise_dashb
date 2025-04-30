@@ -1,6 +1,6 @@
 #--------------------             
 # Author : Serge Zaugg
-# Description : Utility functions used by main.py
+# Description : Utility and ML functions
 #--------------------
 
 import os
@@ -15,7 +15,6 @@ from streamlit import session_state as ss
 
 plotcol_seq01 = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 plotcol_seq02 = ['#ffbb00', '#0077ff', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
-
 
 
 def update_ss(kname, ssname):
@@ -96,15 +95,12 @@ def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
     return(diresu)
 
 
-# # @st.cache_data
-def plot_scenarios(scenarios_di, width = 450, height = 450,):
+@st.cache_data
+def plot_scenarios(scenarios_di, width = 450, height = 450):
     """
     """
-    mvn_params = scenarios_di
-
-    tit_str = 'Class A: N=' + str(mvn_params['n1']) + '   Class B: N=' + str(mvn_params['n2'])
-    df = make_dataset(params = mvn_params, n_noisy_features = 0) 
-
+    # tit_str = 'Class A: N=' + str(scenarios_di['n1']) + '   Class B: N=' + str(scenarios_di['n2'])
+    df = make_dataset(params = scenarios_di, n_noisy_features = 0) 
     fig1 = px.scatter(
         data_frame = df,
         x = 'f01',
@@ -112,7 +108,7 @@ def plot_scenarios(scenarios_di, width = 450, height = 450,):
         color = 'class',
         width = width,
         height = height,
-        title = tit_str,
+        # title = tit_str,
         template="plotly_dark",
         color_discrete_sequence = plotcol_seq01,
         )         

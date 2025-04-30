@@ -53,7 +53,9 @@ def select_distr_param():
                 c1, c2, c3 = st.columns(3)  
                 with c1:
                     distr_name = st.text_input(key = "k013", label = "Give a name:", value = "") 
-                with c2:   
+                with c2: 
+                    st.text("") 
+                    st.text("")   
                     submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = True)  
                 if  len(distr_name) < 3:
                     with c3:   
@@ -61,6 +63,12 @@ def select_distr_param():
                 else:    
                     if submitted_1:
                         ss['di_li'][distr_name] = sce_temp
+                        # delete initial key 
+                        ss['di_li'].pop("empty22", None)
+                        ss["upar"]["par02"] = distr_name
+                        # st.rerun()
+
+
 
         with CB:
             st.text("Preview")
@@ -74,14 +82,18 @@ def select_stored_scenario():
     with st.container(border=True): # , height = 500):
         CA, CB = st.columns([0.50, 0.50])
         with CA:
-            _ = st.selectbox('Select', options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
+            _ = st.selectbox('Select a scenario', options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
+
+            # st.write("AAA", ss["upar"]["par02"])
             
-            if len(ss["upar"]["par02"]) > 0:
-                nnoi_ops =  [1, 3, 5, 10, 30, 50, 100, 300, 500, 1000, 3000]
-                _ = st.segmented_control("Nb noisy features", options=nnoi_ops, selection_mode="multi", key="wid03", on_change=update_ss, args=["wid03", "par03"],)
+            if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
+                nnoi_ops = 2**np.arange(0,13)
+                _ = st.segmented_control("Nb noisy features", options=nnoi_ops, selection_mode="multi", 
+                                         default = ss["upar"]["par03"],  key="wid03", on_change=update_ss, args=["wid03", "par03"],)
                 max_feat_ops = np.arange(1,31,1)
-                _ = st.select_slider("RFO max features", options=max_feat_ops, value=1, key="wid04", on_change=update_ss, args=["wid04", "par04"],)
-                _ = st.slider("RFO n trees", min_value=1, max_value=30, value=10, step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
+                coa, cob = st.columns([0.50, 0.50])
+                _ = coa.select_slider("RFO max features", options=max_feat_ops, value=1, key="wid04", on_change=update_ss, args=["wid04", "par04"],)
+                _ = cob.slider("RFO n trees", min_value=1, max_value=30, value=10, step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
                                 
                 with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
                     submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = True)  
@@ -99,7 +111,7 @@ def select_stored_scenario():
                         ss['resu'].append(df)
 
         with CB:
-            if len(ss["upar"]["par02"]) > 0:
+            if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
                 fig00 = plot_scenarios(scenarios_di = ss['di_li'][ss["upar"]["par02"]], width = 450, height = 350)
                 st.plotly_chart(fig00, use_container_width=False, key='fig00')
 
