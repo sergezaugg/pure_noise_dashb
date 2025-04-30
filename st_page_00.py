@@ -5,10 +5,11 @@
 
 import streamlit as st
 
+st.subheader("coming soon ...")
 
-st.text("debuggin info")
+st.divider()
 
-
+st.text("debugging info")
 
 with st.container(height=700, border=True):
     st.text("Session state's internal values") 
