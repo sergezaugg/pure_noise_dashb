@@ -8,7 +8,6 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 from sklearn.ensemble import RandomForestClassifier
-# from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 import streamlit as st
@@ -21,17 +20,6 @@ plotcol_seq02 = ['#ffbb00', '#0077ff', '#33ff00', '#00ffff', '#ff00ff', '#ffff66
 
 def update_ss(kname, ssname):
     ss["upar"][ssname] = ss[kname]      
-
-
-
-# def str_to_int_spec(s):
-#     """
-#     Description: transform string s to integer, if not possible return 0 (Zero)
-#     """
-#     try:
-#         return(int(s))
-#     except:
-#         return(0)
 
 
 def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):
