@@ -13,7 +13,7 @@ from utils import update_ss, plot_scenarios, evaluate_scenarios_rfo
 
 def select_distr_param():
     with st.container(border=True, ): # height = 400):
-        CA, CB = st.columns([0.65, 0.35])
+        CA, CB, CC = st.columns([0.65, 0.10, 0.35])
         with CA:
             st.text("Define distribution class A")
             c1, c2, c3, c4, c5, c6, = st.columns(6)  
@@ -56,7 +56,7 @@ def select_distr_param():
                 with c2: 
                     st.text("") 
                     st.text("")   
-                    submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = True)  
+                    submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = False)  
                 if  len(distr_name) < 3:
                     with c3:   
                         st.info("Name must be > 2 charters")  
@@ -64,14 +64,12 @@ def select_distr_param():
                     if submitted_1:
                         ss['di_li'][distr_name] = sce_temp
                         # delete initial key 
-                        ss['di_li'].pop("empty22", None)
+                        ss['di_li'].pop("Please create a scenario", None)
                         ss["upar"]["par02"] = distr_name
                         # st.rerun()
-
-
-
         with CB:
             st.text("Preview")
+        with CC:
             fig01 = plot_scenarios(scenarios_di = sce_temp, width = 450, height = 350)
             st.plotly_chart(fig01, use_container_width=False, key='fig01')
 
@@ -80,23 +78,21 @@ def select_distr_param():
 
 def select_stored_scenario():
     with st.container(border=True): # , height = 500):
-        CA, CB = st.columns([0.50, 0.50])
+        # CA, CB = st.columns([0.50, 0.50])
+        CA, CB, CC = st.columns([0.65, 0.10, 0.35])
         with CA:
-            _ = st.selectbox('Select a scenario', options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
+            _ = st.selectbox('Select a scenario', placeholder = "aa", options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
 
-            # st.write("AAA", ss["upar"]["par02"])
-            
             if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
-                nnoi_ops = 2**np.arange(0,13)
+                nnoi_ops = 2**np.arange(0,13,1)
                 _ = st.segmented_control("Nb noisy features", options=nnoi_ops, selection_mode="multi", 
                                          default = ss["upar"]["par03"],  key="wid03", on_change=update_ss, args=["wid03", "par03"],)
-                max_feat_ops = np.arange(1,31,1)
                 coa, cob = st.columns([0.50, 0.50])
-                _ = coa.select_slider("RFO max features", options=max_feat_ops, value=1, key="wid04", on_change=update_ss, args=["wid04", "par04"],)
-                _ = cob.slider("RFO n trees", min_value=1, max_value=30, value=10, step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
+                _ = coa.select_slider("RFO max features", options=np.arange(1,31,1), value=ss["upar"]["par04"], key="wid04", on_change=update_ss, args=["wid04", "par04"],)
+                _ = cob.slider("RFO n trees", min_value=1, max_value=30, value=ss["upar"]["par05"], step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
                                 
                 with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
-                    submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = True)  
+                    submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = False)  
                     if submitted3:
                         resu01 = evaluate_scenarios_rfo(sce = ss['di_li'][ss["upar"]["par02"]], 
                             nb_noisy_features = ss["upar"]["par03"],  
@@ -109,10 +105,11 @@ def select_stored_scenario():
                         df['run_nb'] = ss['run_nb']
                         ss['run_nb'] += 1
                         ss['resu'].append(df)
-
         with CB:
+            st.text("Selected")
+        with CC:
             if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
-                fig00 = plot_scenarios(scenarios_di = ss['di_li'][ss["upar"]["par02"]], width = 450, height = 350)
+                fig00 = plot_scenarios(scenarios_di = ss['di_li'][ss["upar"]["par02"]], width = 450, height = 350, tit_str = ss["upar"]["par02"])
                 st.plotly_chart(fig00, use_container_width=False, key='fig00')
 
 
@@ -128,21 +125,25 @@ def prepare_results(li):
 
 @st.cache_data
 def make_plot(df, width, height):
-    fig03 = px.line(
-        data_frame = df,
-        x = 'nb_noisy_features',
-        y = 'resu_auc',
-        color = 'scenario',
-        line_group = 'run_nb',
-        facet_col = 'rfo_max_features',
-        facet_row = 'rfo_nb_trees',
-        width = width,
-        height = height,
-        markers = True,
-        template = "plotly_dark",
-        log_x = True,
-        )
-    st.plotly_chart(fig03, use_container_width=False, key='fig03')
+    with st.container(border=True): 
+        fig03 = px.line(
+            data_frame = df,
+            x = 'nb_noisy_features',
+            y = 'resu_auc',
+            color = 'scenario',
+            line_group = 'run_nb',
+            facet_col = 'rfo_max_features',
+            facet_row = 'rfo_nb_trees',
+            facet_row_spacing = 0.1, 
+            facet_col_spacing = 0.05,
+            width = width,
+            height = height,
+            markers = True,
+            template = "plotly_dark",
+            log_x = True, 
+            )
+        _ = fig03.update_layout(paper_bgcolor="#222222")
+        st.plotly_chart(fig03, use_container_width=False, key='fig03')
 
 
 
