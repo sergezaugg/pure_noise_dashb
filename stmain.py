@@ -12,8 +12,8 @@ st.set_page_config(layout="wide")
 
 # set initial scenario parameters 
 init_distr =  {
-    'n1' : 2000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.5,
-    'n2' : 2000, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : -0.5,
+    'n1' : 2000, 'mu1' : [+1.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.0,
+    'n2' : 2000, 'mu2' : [0.0, -1.0] , 'std2' : [1.0, 1.0], 'corr2' : 0.0,
     }
 if 'distr' not in ss:
     ss['distr'] = init_distr

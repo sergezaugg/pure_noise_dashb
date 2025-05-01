@@ -12,37 +12,27 @@ from utils import update_ss, plot_scenarios, evaluate_scenarios_rfo
 
 
 def select_distr_param():
-    with st.container(border=True, ): # height = 400):
-        CA, CB, CC = st.columns([0.65, 0.10, 0.35])
+    with st.expander("(1) Define a scenario (click to expand/collapse)", expanded=True):
+        CA, CB, CC = st.columns([0.60, 0.05, 0.30])
         with CA:
-            st.text("Define distribution class A")
-            c1, c2, c3, c4, c5, c6, = st.columns(6)  
-            with c1:
-                n1 = st.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['n1'],      step=100, key = "k001")
-            with c2:
-                mu1x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['mu1'][0],  step=1.0, key = "k002")
-            with c3:
-                mu1y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['mu1'][1],  step=1.0, key = "k003")
-            with c4:
-                std1x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['std1'][0], step=0.1, key = "k004")
-            with c5:
-                std1y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['std1'][1], step=0.1, key = "k005")
-            with c6:
-                corr1 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['corr1'],   step=0.1, key = "k006")
-            st.text("Define distribution class B")
-            c1, c2, c3, c4, c5, c6, = st.columns(6)
-            with c1:
-                n2 = st.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['n2'],      step=100, key = "k007")
-            with c2:
-                mu2x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['mu2'][0],  step=1.0, key = "k008")
-            with c3:
-                mu2y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['mu2'][1],  step=1.0, key = "k009")
-            with c4:
-                std2x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['std2'][0], step=0.1, key = "k010")
-            with c5:
-                std2y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['std2'][1], step=0.1, key = "k011")
-            with c6:
-                corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['corr2'],   step=0.1, key = "k012")
+            # 
+            c0, c1, c2, c3, c4, c5, c6, = st.columns(7) 
+            c0.text("Class A")
+            n1 = c1.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['n1'],      step=100, key = "k001")
+            mu1x = c2.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['mu1'][0],  step=1.0, key = "k002")
+            mu1y = c3.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['mu1'][1],  step=1.0, key = "k003")
+            std1x = c4.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['std1'][0], step=0.1, key = "k004")
+            std1y = c5.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['std1'][1], step=0.1, key = "k005")
+            corr1 = c6.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['corr1'],   step=0.05, key = "k006")
+            # 
+            c0, c1, c2, c3, c4, c5, c6, = st.columns(7)
+            c0.text("Class B")
+            n2 = c1.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['n2'],      step=100, key = "k007")
+            mu2x = c2.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['mu2'][0],  step=1.0, key = "k008")
+            mu2y = c3.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['mu2'][1],  step=1.0, key = "k009")
+            std2x = c4.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['std2'][0], step=0.1, key = "k010")
+            std2y = c5.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['std2'][1], step=0.1, key = "k011")
+            corr2 = c6.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['corr2'],   step=0.05, key = "k012")
             # ...
             sce_temp = {
                     'n1' : n1, 'mu1' : [mu1x, mu1y] , 'std1' : [std1x, std1y], 'corr1' : corr1,
@@ -57,22 +47,19 @@ def select_distr_param():
                     st.text("") 
                     st.text("")   
                     submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = False)  
-                if  len(distr_name) < 3:
-                    with c3: 
-                        st.text("")   
-                        st.info("Name must be > 2 charters")  
-                else:    
-                    if submitted_1:
-                        ss['di_li'][distr_name] = sce_temp
-                        # delete initial key 
-                        ss['di_li'].pop("Please create a scenario", None)
-                        ss["upar"]["par02"] = distr_name
-                        # get numerical index of newly created scenario name 
-                        # st.write(  np.where([a==distr_name for a in ss['di_li'].keys()])[0]  )
-                        ss['num_index_sce'] = np.where([a==distr_name for a in ss['di_li'].keys()])[0].item()
+                    if len(distr_name) < 3:
+                        st.text("Name must contain at least 3 charters")  
+                    else:    
+                        if submitted_1:
+                            ss['di_li'][distr_name] = sce_temp
+                            # delete initial key 
+                            ss['di_li'].pop("Please create a scenario", None)
+                            ss["upar"]["par02"] = distr_name
+                            # get numerical index of newly created scenario name 
+                            ss['num_index_sce'] = np.where([a==distr_name for a in ss['di_li'].keys()])[0].item()
 
         with CB:
-            st.text("Preview")
+            st.text("Preview:")
         with CC:
             fig01 = plot_scenarios(scenarios_di = sce_temp, width = 450, height = 350)
             st.plotly_chart(fig01, use_container_width=False, key='fig01')
@@ -81,10 +68,11 @@ def select_distr_param():
 
 
 def select_stored_scenario():
-    with st.container(border=True): 
-        CA, CB, CC = st.columns([0.65, 0.10, 0.35])
+    with st.expander("(2) Run simulations (click to expand/collapse)", expanded=True):
+        CA, _, CB, CC = st.columns([0.45, 0.15, 0.05, 0.30])
         with CA:
-            _ = st.selectbox('Select a scenario', index=ss['num_index_sce'], options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
+            coa, cob = st.columns([0.50, 0.50])
+            _ = coa.selectbox('Select a scenario', index=ss['num_index_sce'], options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
 
             if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
                 nnoi_ops = 2**np.arange(0,13,1)
@@ -95,7 +83,9 @@ def select_stored_scenario():
                 _ = cob.slider("RFO n trees", min_value=1, max_value=30, value=ss["upar"]["par05"], step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
                                 
                 with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
-                    submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = False)  
+                    coa, cob = st.columns([0.20, 0.50])
+                    message01 = "New dataset sampled from scenario at each run to create Monte-Carlo replicates of same scenario"
+                    submitted3 = coa.form_submit_button("Start simulation", type="primary", use_container_width = False, help=message01) 
                     if submitted3:
                         resu01 = evaluate_scenarios_rfo(sce = ss['di_li'][ss["upar"]["par02"]], 
                             nb_noisy_features = ss["upar"]["par03"],  
@@ -128,8 +118,8 @@ def prepare_results(li):
 
 @st.cache_data
 def make_plot(df, width, height):
-    plotcol_seq02 = ['#ff0000', '#ffff66', '#33ff00', '#00ffff', '#ffbb00', '#ff00ff', '#0077ff',]
-    with st.container(border=True): 
+    with st.expander("(3) Check simulation results (click to expand/collapse)", expanded=True):
+        plotcol_seq02 = ['#ff0000', '#ffff66', '#33ff00', '#00ffff', '#ffbb00', '#ff00ff', '#0077ff',]
         fig03 = px.line(
             data_frame = df,
             x = 'nb_noisy_features',
@@ -147,7 +137,7 @@ def make_plot(df, width, height):
             log_x = True, 
             color_discrete_sequence = plotcol_seq02,
             )
-        _ = fig03.update_layout(paper_bgcolor="#222222")
+        _ = fig03.update_layout(paper_bgcolor="#002240")
         _ = fig03.update_layout(yaxis_range=[0.4,1.05])
         st.plotly_chart(fig03, use_container_width=False, key='fig03')
 
