@@ -1,6 +1,7 @@
 # Impact of pure-noise-features on predictive performance in supervised classification (II)
 
 ### Summary
+* A simple dashboard to explore the impact of pure-noise-features on predictive performance of Rando Forest classifiers
 
 
 ### Dependencies / Intallation
@@ -11,10 +12,9 @@ pip install -r requirements.txt
 ```
 
 ### Usage / Sample code
-*  tbd
-
-```python 
-
+*  Start dashboard
+```bash 
+streamlit run stmain.py
 
 ```
 
