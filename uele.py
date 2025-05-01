@@ -122,35 +122,35 @@ def prepare_results(li):
 
 @st.cache_data
 def make_plot(df, width, height):
-    with st.expander("(3) Check simulation results (click to expand/collapse)", expanded=True):
-        plotcol_seq02 = ['#ff0000', '#ffff66', '#33ff00', '#00ffff', '#ffbb00', '#ff00ff', '#0077ff',]
-        fig03 = px.line(
-            data_frame = df,
-            x = 'nb_noisy_features',
-            y = 'resu_auc',
-            color = 'scenario',
-            line_group = 'run_nb',
-            facet_col = 'rfo_max_features',
-            facet_row = 'rfo_nb_trees',
-            facet_row_spacing = 0.1, 
-            facet_col_spacing = 0.05,
-            width = width,
-            height = height,
-            markers = True,
-            template = "plotly_dark",
-            log_x = True, 
-            color_discrete_sequence = plotcol_seq02,
-            labels={'nb_noisy_features' : "Nb of pure-noise-features", 
-                    'resu_auc' : "ROC-AUC",
-                    'rfo_max_features' : "RFO max features",
-                    'rfo_nb_trees' : "RFO nb trees",
-                    }
-            )
-        _ = fig03.update_layout(paper_bgcolor="#002240")
-        _ = fig03.update_layout(yaxis_range=[0.4,1.05])
-        # _ = fig03.update_layout(xaxis_title="Nb of pure-noise-features", yaxis_title="ROC-AUC")
-        # _ = fig03.update_layout(font=dict(size=28))
-        st.plotly_chart(fig03, use_container_width=False, key='fig03')
+    plotcol_seq02 = ['#ff0000', '#ffff66', '#33ff00', '#00ffff', '#ffbb00', '#ff00ff', '#0077ff',]
+    fig03 = px.line(
+        data_frame = df,
+        x = 'nb_noisy_features',
+        y = 'resu_auc',
+        color = 'scenario',
+        line_group = 'run_nb',
+        facet_col = 'rfo_max_features',
+        facet_row = 'rfo_nb_trees',
+        facet_row_spacing = 0.1, 
+        facet_col_spacing = 0.05,
+        width = width,
+        height = height,
+        markers = True,
+        template = "plotly_dark",
+        log_x = True, 
+        color_discrete_sequence = plotcol_seq02,
+        labels={'nb_noisy_features' : "Nb of pure-noise-features", 
+                'resu_auc' : "ROC-AUC",
+                'rfo_max_features' : "RFO max features",
+                'rfo_nb_trees' : "RFO nb trees",
+                }
+        )
+    _ = fig03.update_layout(paper_bgcolor="#002240")
+    _ = fig03.update_layout(yaxis_range=[0.4,1.05])
+    # _ = fig03.update_layout(xaxis_title="Nb of pure-noise-features", yaxis_title="ROC-AUC")
+    # _ = fig03.update_layout(font=dict(size=28))
+    st.plotly_chart(fig03, use_container_width=False, key='fig03')
+
 
 
 

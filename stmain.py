@@ -62,15 +62,11 @@ pg = st.navigation(pages)
 pg.run()
 
 with st.sidebar:
-    st.text("v0.5.0 - under devel")
+    st.text("v0.5.1 - under devel")
 
     st.title(""); 
 
-    st.text("Line-plot size")
-    _ = st.slider("Width",  min_value=100, max_value=2000, value=1000, step=100, key="wid10", on_change=update_ss, args=["wid10", "par10"])
-    _ = st.slider("Height", min_value=100, max_value=2000, value=500, step=100, key="wid11", on_change=update_ss, args=["wid11", "par11"])
-
-
+ 
     st.title(""); st.title(""); st.title(""); st.title(""); 
     st.title(""); st.title("")
     st.markdown(''':gray[RELATED TOPICS]''')
