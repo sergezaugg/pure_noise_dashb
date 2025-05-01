@@ -51,6 +51,10 @@ def select_distr_param():
                         st.text("Name must contain at least 3 charters")  
                     else:    
                         if submitted_1:
+                            # add a counter in from of sce name 
+                            distr_name = str(ss['sce_counter']).zfill(3) + '_' + distr_name
+                            ss['sce_counter'] += 1
+                            # store scenario parameters 
                             ss['di_li'][distr_name] = sce_temp
                             # delete initial key 
                             ss['di_li'].pop("Please create a scenario", None)
@@ -80,7 +84,7 @@ def select_stored_scenario():
                                          default = ss["upar"]["par03"],  key="wid03", on_change=update_ss, args=["wid03", "par03"],)
                 coa, cob = st.columns([0.50, 0.50])
                 _ = coa.select_slider("RFO max features", options=np.arange(1,31,1), value=ss["upar"]["par04"], key="wid04", on_change=update_ss, args=["wid04", "par04"],)
-                _ = cob.slider("RFO n trees", min_value=1, max_value=30, value=ss["upar"]["par05"], step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
+                _ = cob.slider("RFO nb trees", min_value=1, max_value=30, value=ss["upar"]["par05"], step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
                                 
                 with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
                     coa, cob = st.columns([0.20, 0.50])
@@ -99,7 +103,7 @@ def select_stored_scenario():
                         ss['run_nb'] += 1
                         ss['resu'].append(df)
         with CB:
-            st.text("Selected")
+            st.text("Selected:")
         with CC:
             if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
                 fig00 = plot_scenarios(scenarios_di = ss['di_li'][ss["upar"]["par02"]], width = 450, height = 350, tit_str = ss["upar"]["par02"])
@@ -136,9 +140,16 @@ def make_plot(df, width, height):
             template = "plotly_dark",
             log_x = True, 
             color_discrete_sequence = plotcol_seq02,
+            labels={'nb_noisy_features' : "Nb of pure-noise-features", 
+                    'resu_auc' : "ROC-AUC",
+                    'rfo_max_features' : "RFO max features",
+                    'rfo_nb_trees' : "RFO nb trees",
+                    }
             )
         _ = fig03.update_layout(paper_bgcolor="#002240")
         _ = fig03.update_layout(yaxis_range=[0.4,1.05])
+        # _ = fig03.update_layout(xaxis_title="Nb of pure-noise-features", yaxis_title="ROC-AUC")
+        # _ = fig03.update_layout(font=dict(size=28))
         st.plotly_chart(fig03, use_container_width=False, key='fig03')
 
 

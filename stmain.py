@@ -27,7 +27,7 @@ if 'di_li' not in ss:
 if 'upar' not in ss:
     ss["upar"] = {
         "par02" : "initial",
-        "par03" : 2**np.arange(0,11,2), # [1,10,100,1000], 
+        "par03" : 2**np.arange(0,10,1), # [1,10,100,1000], 
         "par04" : 1, 
         "par05" : 10, 
         "par10" : 1000, 
@@ -46,6 +46,9 @@ if 'run_nb' not in ss:
 
 if 'num_index_sce' not in ss:
     ss['num_index_sce'] = 0
+
+if 'sce_counter' not in ss:
+    ss['sce_counter'] = 0
 
 
 # main navigation 
