@@ -55,12 +55,12 @@ def select_distr_param():
                             distr_name = str(ss['sce_counter']).zfill(3) + '_' + distr_name
                             ss['sce_counter'] += 1
                             # store scenario parameters 
-                            ss['di_li'][distr_name] = sce_temp
+                            ss['stored_distr_parameters'][distr_name] = sce_temp
                             # delete initial key 
-                            ss['di_li'].pop("Please create a scenario", None)
+                            ss['stored_distr_parameters'].pop("Please create a scenario", None)
                             ss["upar"]["par02"] = distr_name
                             # get numerical index of newly created scenario name 
-                            ss['num_index_sce'] = np.where([a==distr_name for a in ss['di_li'].keys()])[0].item()
+                            ss['num_index_sce'] = np.where([a==distr_name for a in ss['stored_distr_parameters'].keys()])[0].item()
 
         with CB:
             st.text("Preview:")
@@ -76,7 +76,7 @@ def select_stored_scenario():
         CA, _, CB, CC = st.columns([0.45, 0.15, 0.05, 0.30])
         with CA:
             coa, cob = st.columns([0.50, 0.50])
-            _ = coa.selectbox('Select a scenario', index=ss['num_index_sce'], options = ss['di_li'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
+            _ = coa.selectbox('Select a scenario', index=ss['num_index_sce'], options = ss['stored_distr_parameters'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
 
             if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
                 nnoi_ops = 2**np.arange(0,13,1)
@@ -91,7 +91,7 @@ def select_stored_scenario():
                     message01 = "New dataset sampled from scenario at each run to create Monte-Carlo replicates of same scenario"
                     submitted3 = coa.form_submit_button("Start simulation", type="primary", use_container_width = False, help=message01) 
                     if submitted3:
-                        resu01 = evaluate_scenarios_rfo(sce = ss['di_li'][ss["upar"]["par02"]], 
+                        resu01 = evaluate_scenarios_rfo(sce = ss['stored_distr_parameters'][ss["upar"]["par02"]], 
                             nb_noisy_features = ss["upar"]["par03"],  
                             rfo_max_features = ss["upar"]["par04"], 
                             ntrees = ss["upar"]["par05"], 
@@ -106,7 +106,7 @@ def select_stored_scenario():
             st.text("Selected:")
         with CC:
             if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
-                fig00 = plot_scenarios(scenarios_di = ss['di_li'][ss["upar"]["par02"]], width = 450, height = 350, tit_str = ss["upar"]["par02"])
+                fig00 = plot_scenarios(scenarios_di = ss['stored_distr_parameters'][ss["upar"]["par02"]], width = 450, height = 350, tit_str = ss["upar"]["par02"])
                 st.plotly_chart(fig00, use_container_width=False, key='fig00')
 
 

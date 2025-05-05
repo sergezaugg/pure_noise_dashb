@@ -39,11 +39,11 @@ with col_a:
 
 
 
-# st.text("debugging info")
-# with st.container(height=700, border=True):
-#     st.text("Session state's internal values") 
-#     for k in st.session_state:
-#         st.write(k, st.session_state[k])
+st.text("debugging info")
+with st.container(height=700, border=True):
+    st.text("Session state's internal values") 
+    for k in st.session_state:
+        st.write(k, st.session_state[k])
 
 
 

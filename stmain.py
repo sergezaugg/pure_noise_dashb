@@ -19,9 +19,9 @@ if 'distr' not in ss:
     ss['distr'] = init_distr
 
 # ...
-if 'di_li' not in ss:
-    ss['di_li'] = {}
-    ss['di_li']['Please create a scenario'] = "initial" # {}
+if 'stored_distr_parameters' not in ss:
+    ss['stored_distr_parameters'] = {}
+    ss['stored_distr_parameters']['Please create a scenario'] = "initial" # {}
 
 # keep track of user-provided params
 if 'upar' not in ss:
@@ -68,7 +68,6 @@ with st.sidebar:
     st.text("(1) Define and store one or several distributional scenarios.")
     st.text("(2) Define nb of pure-noise-features and RF parameters and run simulations.")
     st.text("(3) Check the plotted results to compare scenarios and RF parameters. Simulation results are incrementally stored.")
-    st.text("(4) Refresh or open a new browser window to flush all simulation results.")
 
     st.title(""); st.title(""); st.title(""); 
     st.title(""); st.title("")
