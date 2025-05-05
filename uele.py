@@ -152,5 +152,20 @@ def make_plot(df, width, height):
     st.plotly_chart(fig03, use_container_width=False, key='fig03')
 
 
+@st.cache_data
+def display_plots_on_grid(dict_of_distr_params, num_cols = 3):
+    """
+    description : helper function to display plots in a regular grid 
+    dict_of_distr_params : dict stored in ss['stored_distr_parameters']
+    """
+    with st.expander("(1b) Stored scenarios (click to expand/collapse)", expanded=True):
+        grid = st.columns(num_cols)
+        col = 1
+        for ii, k in enumerate (dict_of_distr_params.keys()) :   
+            fig_temp = plot_scenarios(scenarios_di = dict_of_distr_params[k], width = 450, height = 350, tit_str = k) 
+            grid[col-1].plotly_chart(fig_temp, use_container_width=False)
+            col += 1
+            col = 0 if col % num_cols == 0 else col
 
+      
 
