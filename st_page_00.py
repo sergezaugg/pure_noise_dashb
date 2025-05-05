@@ -1,18 +1,16 @@
 #--------------------             
 # Author : Serge Zaugg
 # Description : Streamlit page 
-# following supported colors: blue, green, orange, red, violet, gray/grey, rainbow, or primary. 
 #--------------------
 
 import streamlit as st
 
-col_a, col_space01 = st.columns([0.50, 0.50])
+col_a, col_space01 = st.columns([0.60, 0.25])
 
 with col_a:
 
     with st.container(border=True, key='conta_01'):
         st.title(":blue[Impact of pure-noise-features on predictive performance]") 
-        st.subheader(":blue[Applied Machine Learning  ---  ML Tutorials  ---  Supervised Classification]") 
         st.page_link("st_page_01.py", label="LINK : Interactive dashboard")
 
     st.markdown('''   
@@ -39,11 +37,11 @@ with col_a:
 
 
 
-st.text("debugging info")
-with st.container(height=700, border=True):
-    st.text("Session state's internal values") 
-    for k in st.session_state:
-        st.write(k, st.session_state[k])
+# st.text("debugging info")
+# with st.container(height=700, border=True):
+#     st.text("Session state's internal values") 
+#     for k in st.session_state:
+#         st.write(k, st.session_state[k])
 
 
 
