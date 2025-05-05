@@ -12,7 +12,7 @@ from utils import update_ss, plot_scenarios, evaluate_scenarios_rfo
 
 
 def select_distr_param():
-    with st.expander("(1) Define a scenario (click to expand/collapse)", expanded=True):
+    with st.expander("Define scenarios", expanded=True):
         CA, CB, CC = st.columns([0.60, 0.05, 0.30])
         with CA:
             # 
@@ -59,7 +59,9 @@ def select_distr_param():
                             # delete initial key 
                             ss['stored_distr_parameters'].pop("Please create a scenario", None)
                             ss["upar"]["par02"] = distr_name
-                            # get numerical index of newly created scenario name 
+                            # store new defaults 
+                            ss['distr'] = sce_temp
+                            # get numerical index of newly created scenario name - needed to update defaults of st.selectbox()
                             ss['num_index_sce'] = np.where([a==distr_name for a in ss['stored_distr_parameters'].keys()])[0].item()
 
         with CB:
@@ -72,13 +74,13 @@ def select_distr_param():
 
 
 def select_stored_scenario():
-    with st.expander("(2) Run simulations (click to expand/collapse)", expanded=True):
+    with st.expander("Run simulations", expanded=True):
         CA, _, CB, CC = st.columns([0.45, 0.15, 0.05, 0.30])
         with CA:
             coa, cob = st.columns([0.50, 0.50])
             _ = coa.selectbox('Select a scenario', index=ss['num_index_sce'], options = ss['stored_distr_parameters'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
 
-            if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
+            if not ss["upar"]["par02"] == 'initial': 
                 nnoi_ops = 2**np.arange(0,13,1)
                 _ = st.segmented_control("Nb pure-noise-features", options=nnoi_ops, selection_mode="multi", 
                                          default = ss["upar"]["par03"],  key="wid03", on_change=update_ss, args=["wid03", "par03"],)
@@ -99,13 +101,13 @@ def select_stored_scenario():
                         # include some metadata and scenario
                         df = resu01['df_result']
                         df['scenario'] = ss["upar"]["par02"]
-                        df['run_nb'] = ss['run_nb']
+                        df['run_id'] = ss['run_nb']
                         ss['run_nb'] += 1
                         ss['resu'].append(df)
         with CB:
             st.text("Selected:")
         with CC:
-            if not ss["upar"]["par02"] == 'initial': # len(ss["upar"]["par02"]) > 0:
+            if not ss["upar"]["par02"] == 'initial': 
                 fig00 = plot_scenarios(scenarios_di = ss['stored_distr_parameters'][ss["upar"]["par02"]], width = 450, height = 350, tit_str = ss["upar"]["par02"])
                 st.plotly_chart(fig00, use_container_width=False, key='fig00')
 
@@ -116,7 +118,7 @@ def prepare_results(li):
     li : a list of dataframes 
     """
     df = pd.concat(li)
-    df = df.sort_values(by = [ 'rfo_max_features', 'nb_noisy_features', 'scenario', 'run_nb'])
+    df = df.sort_values(by = [ 'rfo_max_features', 'nb_noisy_features', 'scenario', 'run_id'])
     return(df)
 
 
@@ -128,7 +130,7 @@ def make_plot(df, width, height):
         x = 'nb_noisy_features',
         y = 'resu_auc',
         color = 'scenario',
-        line_group = 'run_nb',
+        line_group = 'run_id',
         facet_col = 'rfo_max_features',
         facet_row = 'rfo_nb_trees',
         facet_row_spacing = 0.1, 
@@ -153,19 +155,21 @@ def make_plot(df, width, height):
 
 
 @st.cache_data
-def display_plots_on_grid(dict_of_distr_params, num_cols = 3):
+def display_stored_distributions(dict_of_distr_params, num_cols = 3):
     """
     description : helper function to display plots in a regular grid 
     dict_of_distr_params : dict stored in ss['stored_distr_parameters']
     """
-    with st.expander("(1b) Stored scenarios (click to expand/collapse)", expanded=True):
-        grid = st.columns(num_cols)
-        col = 1
-        for ii, k in enumerate (dict_of_distr_params.keys()) :   
-            fig_temp = plot_scenarios(scenarios_di = dict_of_distr_params[k], width = 450, height = 350, tit_str = k) 
-            grid[col-1].plotly_chart(fig_temp, use_container_width=False)
-            col += 1
-            col = 0 if col % num_cols == 0 else col
+    if not ss["upar"]["par02"] == 'initial':
+        with st.expander("Stored scenarios", expanded=True):
+        # with st.container(border=True):
+            grid = st.columns(num_cols)
+            col = 1
+            for ii, k in enumerate (dict_of_distr_params.keys()) :   
+                fig_temp = plot_scenarios(scenarios_di = dict_of_distr_params[k], width = 350, height = 300, tit_str = k) 
+                grid[col-1].plotly_chart(fig_temp, use_container_width=False)
+                col += 1
+                col = 0 if col % num_cols == 0 else col
 
       
 

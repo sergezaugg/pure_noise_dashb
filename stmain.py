@@ -6,19 +6,20 @@
 
 import streamlit as st
 from streamlit import session_state as ss
-from utils import update_ss
 import numpy as np
-st.set_page_config(layout="wide")
+
+# (1) ---------------------
+# set initial session state
 
 # set initial scenario parameters 
 init_distr =  {
-    'n1' : 2000, 'mu1' : [+1.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.0,
-    'n2' : 2000, 'mu2' : [0.0, -1.0] , 'std2' : [1.0, 1.0], 'corr2' : 0.0,
+    'n1' : 2000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.0,
+    'n2' : 2000, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : 0.0,
     }
 if 'distr' not in ss:
     ss['distr'] = init_distr
 
-# ...
+# dict to track distribution that were stored by user 
 if 'stored_distr_parameters' not in ss:
     ss['stored_distr_parameters'] = {}
     ss['stored_distr_parameters']['Please create a scenario'] = "initial" # {}
@@ -41,6 +42,7 @@ if 'resu' not in ss:
 if 'dfresu' not in ss:
     ss['dfresu'] = []
 
+# keep track of counters 
 if 'run_nb' not in ss:
     ss['run_nb'] = 0
 
@@ -51,7 +53,11 @@ if 'sce_counter' not in ss:
     ss['sce_counter'] = 0
 
 
-# main navigation 
+# -------------------
+# (2) main navigation
+
+st.set_page_config(layout="wide")
+ 
 pages = [
     st.Page("st_page_01.py", title="Interactive"),
     st.Page("st_page_00.py", title="Summary"),
@@ -66,8 +72,8 @@ with st.sidebar:
 
     st.markdown(''':blue[QUICK GUIDE]''')
     st.text("(1) Define and store one or several distributional scenarios.")
-    st.text("(2) Define nb of pure-noise-features and RF parameters and run simulations.")
-    st.text("(3) Check the plotted results to compare scenarios and RF parameters. Simulation results are incrementally stored.")
+    st.text("(2) Define nb of pure-noise-features and Random Forest parameters and run simulations.")
+    st.text("(3) Check the plotted results to compare scenarios and Random Forest parameters.")
 
     st.title(""); st.title(""); st.title(""); 
     st.title(""); st.title("")
