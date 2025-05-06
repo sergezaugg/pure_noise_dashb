@@ -122,7 +122,6 @@ def plot_scenarios(scenarios_di, width = 450, height = 450, tit_str = ""):
 
 
 
-
 # devel 
 if __name__ == "__main__":
 

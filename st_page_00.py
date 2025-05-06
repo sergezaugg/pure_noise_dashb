@@ -1,25 +1,23 @@
 #--------------------             
 # Author : Serge Zaugg
 # Description : Streamlit page 
-# following supported colors: blue, green, orange, red, violet, gray/grey, rainbow, or primary. 
 #--------------------
 
 import streamlit as st
 
-col_a, col_space01 = st.columns([0.50, 0.50])
+col_a, col_space01 = st.columns([0.60, 0.40])
 
 with col_a:
 
     with st.container(border=True, key='conta_01'):
         st.title(":blue[Impact of pure-noise-features on predictive performance]") 
-        st.subheader(":blue[Applied Machine Learning  ---  ML Tutorials  ---  Supervised Classification]") 
         st.page_link("st_page_01.py", label="LINK : Interactive dashboard")
 
     st.markdown('''   
     :blue[**INTRODUCTION**]
     
     In supervised classification applications, many features are often available but not all may be needed.
-    Detecting and excluding non-informative features if less trivial than it seems.
+    Detecting and excluding non-informative features is less trivial than it seems.
     It is therefore legitimate to ask which amount of non-informative features is acceptable. 
     This mini-project gives some answers based on simulated data.    
     ''')
