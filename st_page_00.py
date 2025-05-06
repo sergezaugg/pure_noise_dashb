@@ -5,7 +5,7 @@
 
 import streamlit as st
 
-col_a, col_space01 = st.columns([0.60, 0.25])
+col_a, col_space01 = st.columns([0.60, 0.40])
 
 with col_a:
 
@@ -17,7 +17,7 @@ with col_a:
     :blue[**INTRODUCTION**]
     
     In supervised classification applications, many features are often available but not all may be needed.
-    Detecting and excluding non-informative features if less trivial than it seems.
+    Detecting and excluding non-informative features is less trivial than it seems.
     It is therefore legitimate to ask which amount of non-informative features is acceptable. 
     This mini-project gives some answers based on simulated data.    
     ''')
