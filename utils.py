@@ -13,7 +13,7 @@ from sklearn.metrics import roc_auc_score
 import streamlit as st
 from streamlit import session_state as ss
 
-plotcol_seq01 = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
+# plotcol_seq01 = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 
 def update_ss(kname, ssname):
     ss["upar"][ssname] = ss[kname]      
@@ -60,7 +60,7 @@ def make_dataset(params, n_noisy_features):
 
 
 # @st.cache_data
-def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
+def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features, test_prop):
     """
     """
     df_resu = []
@@ -71,7 +71,7 @@ def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
         # select predictors and response 
         X = df.iloc[:,1:]
         y = df['class']
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.50)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_prop)
         # initialize a model for supervised classification 
         clf = RandomForestClassifier(n_estimators=ntrees, max_depth=30, max_features = rfo_max_features)
         clf.fit(X_train, y_train)

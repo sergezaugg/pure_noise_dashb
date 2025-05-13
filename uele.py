@@ -103,7 +103,8 @@ def select_stored_scenario():
                         message01 = "New dataset sampled from scenario at each run to create Monte-Carlo replicates of same scenario"
                         submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = False, help=message01) 
                         if submitted3:
-                            resu01 = evaluate_scenarios_rfo(sce = ss['stored_distr_parameters'][ss["upar"]["par02"]], 
+                            resu01 = evaluate_scenarios_rfo(sce = ss['stored_distr_parameters'][ss["upar"]["par02"]],   
+                                test_prop = ss["upar"] ["test_size_prop"],
                                 nb_noisy_features = ss["upar"]["par03"],  
                                 rfo_max_features = ss["upar"]["par04"], 
                                 ntrees = ss["upar"]["par05"], 
