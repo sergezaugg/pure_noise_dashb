@@ -13,7 +13,6 @@ from sklearn.metrics import roc_auc_score
 import streamlit as st
 from streamlit import session_state as ss
 
-# plotcol_seq01 = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 
 def update_ss(kname, ssname):
     ss["upar"][ssname] = ss[kname]      

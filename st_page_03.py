@@ -23,10 +23,8 @@ ss["upar"]["col_seq"][4] = cols_b[4].color_picker("Class 4", ss["upar"]["col_seq
 ss["upar"]["col_seq"][5] = cols_b[5].color_picker("Class 5", ss["upar"]["col_seq"][5])   
 ss["upar"]["col_seq"][6] = cols_b[6].color_picker("Class 6", ss["upar"]["col_seq"][6])   
 
-
 st.text("  ")  
 st.text("  ")  
-# st.text("Test set size (proportion)")  
 cols_c = st.columns(5)   
 _ = cols_c[0].slider("Test set size (proportion)", min_value=0.05, max_value=0.95, label_visibility = "visible",
               value=ss["upar"]["test_size_prop"], key="wid_testset", on_change=update_ss, args=["wid_testset", "test_size_prop"],)
