@@ -33,7 +33,12 @@ if 'upar' not in ss:
         "par05" : 10, 
         "par10" : 1000, 
         "par11" : 500, 
+        "col_a" : '#FF00FF',
+        "col_b" : '#6AFF00',
+        "col_seq" : ['#ff0000', '#ffff66', '#33ff00', '#00ffff', '#ffbb00', '#ff00ff', '#0077ff',]
         }
+
+
 
 # keep track of intermediate computation results
 if 'resu' not in ss:
@@ -59,10 +64,11 @@ if 'sce_counter' not in ss:
 st.set_page_config(layout="wide")
  
 pages = [
-    st.Page("st_page_01.py", title="Interactive"),
+    st.Page("st_page_01.py",  title="Simulate"),
     st.Page("st_page_01b.py", title="Stored scenarios"),
-    st.Page("st_page_00.py", title="Summary"),
-    st.Page("st_page_02.py", title="Example"),
+    st.Page("st_page_03.py",  title="Settings"),
+    st.Page("st_page_00.py",  title="Summary"),
+    st.Page("st_page_02.py",  title="Example"),
     ]
 
 pg = st.navigation(pages)

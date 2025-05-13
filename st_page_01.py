@@ -17,7 +17,7 @@ if len(ss['resu']) > 0:
     with st.expander("Simulation results", expanded=True):
         CA, CB, = st.columns([0.80, 0.10])
         with CA:
-            make_plot(df = ss['dfresu'], width = ss["upar"]["par10"], height=ss["upar"]["par11"])
+            make_plot(df = ss['dfresu'], width = ss["upar"]["par10"], height=ss["upar"]["par11"], plotcol_seq02 = ss["upar"]["col_seq"] )
         with CB:
             st.text("Line-plot size")
             _ = st.slider("Width",  min_value=100, max_value=1500, value=ss["upar"]["par10"], step=100, key="wid10", on_change=update_ss, args=["wid10", "par10"])
