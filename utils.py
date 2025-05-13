@@ -13,7 +13,6 @@ from sklearn.metrics import roc_auc_score
 import streamlit as st
 from streamlit import session_state as ss
 
-plotcol_seq01 = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 
 def update_ss(kname, ssname):
     ss["upar"][ssname] = ss[kname]      
@@ -60,7 +59,7 @@ def make_dataset(params, n_noisy_features):
 
 
 # @st.cache_data
-def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
+def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features, test_prop):
     """
     """
     df_resu = []
@@ -71,7 +70,7 @@ def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
         # select predictors and response 
         X = df.iloc[:,1:]
         y = df['class']
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.50)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_prop)
         # initialize a model for supervised classification 
         clf = RandomForestClassifier(n_estimators=ntrees, max_depth=30, max_features = rfo_max_features)
         clf.fit(X_train, y_train)
@@ -94,7 +93,7 @@ def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
 
 
 @st.cache_data
-def plot_scenarios(scenarios_di, width = 450, height = 450, tit_str = ""):
+def plot_scenarios(scenarios_di, colors, width = 450, height = 450, tit_str = "", margin_r=150, margin_t=40):
     """
     """
     # tit_str = 'Class A: N=' + str(scenarios_di['n1']) + '   Class B: N=' + str(scenarios_di['n2'])
@@ -108,13 +107,13 @@ def plot_scenarios(scenarios_di, width = 450, height = 450, tit_str = ""):
         height = height,
         title = tit_str,
         template="plotly_dark",
-        color_discrete_sequence = plotcol_seq01,
+        color_discrete_sequence = colors,
         )         
     _ = fig1.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig1.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig1.update_traces(marker={'size': 2})
     _ = fig1.update_layout(paper_bgcolor="#002240")
-    _ = fig1.update_layout(margin=dict(r=150, t=40 ))
+    _ = fig1.update_layout(margin=dict(r=margin_r, t=margin_t ))
     _ = fig1.update_layout(legend=dict(yanchor="top", y=0.9, xanchor="left", x=1.1)) 
     # fig1.show()
     return(fig1)    
