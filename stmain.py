@@ -68,7 +68,6 @@ pages = [
     st.Page("st_page_01b.py", title="Stored scenarios"),
     st.Page("st_page_03.py",  title="Settings"),
     st.Page("st_page_00.py",  title="Summary"),
-    st.Page("st_page_02.py",  title="Example"),
     ]
 
 pg = st.navigation(pages)
@@ -79,9 +78,9 @@ with st.sidebar:
     st.text("v0.6.0 - under devel")
 
     st.markdown(''':blue[QUICK GUIDE]''')
-    st.text("(1) Define and store one or several distributional scenarios.")
-    st.text("(2) Define nb of pure-noise-features and Random Forest parameters and run simulations.")
-    st.text("(3) Check the plotted results to compare scenarios and Random Forest parameters.")
+    st.text("(1) Define distributional scenarios")
+    st.text("(2) Run simulations wit pure-noise-features")
+    st.text("(3) Check the plotted results")
 
     st.title(""); st.title(""); st.title(""); 
     st.title(""); st.title("")
