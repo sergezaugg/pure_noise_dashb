@@ -60,6 +60,7 @@ st.set_page_config(layout="wide")
  
 pages = [
     st.Page("st_page_01.py", title="Interactive"),
+    st.Page("st_page_01b.py", title="Stored scenarios"),
     st.Page("st_page_00.py", title="Summary"),
     st.Page("st_page_02.py", title="Example"),
     ]

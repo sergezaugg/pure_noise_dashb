@@ -10,10 +10,10 @@ import numpy as np
 import pandas as pd
 from utils import update_ss, plot_scenarios, evaluate_scenarios_rfo
 
-
+# @st.fragment
 def select_distr_param():
     with st.expander("Define scenarios", expanded=True):
-        CA, CB, CC = st.columns([0.60, 0.05, 0.30])
+        CA, CB, CC = st.columns([0.70, 0.30, 0.20])
         with CA:
             # 
             c0, c1, c2, c3, c4, c5, c6, = st.columns(7) 
@@ -38,12 +38,17 @@ def select_distr_param():
                     'n1' : n1, 'mu1' : [mu1x, mu1y] , 'std1' : [std1x, std1y], 'corr1' : corr1,
                     'n2' : n2, 'mu2' : [mu2x, mu2y] , 'std2' : [std2x, std2y], 'corr2' : corr2,
                     }
+        
+        with CB:
+            fig01 = plot_scenarios(scenarios_di = sce_temp, width = 350, height = 270, margin_r=60, margin_t=30, tit_str = "Preview")
+            st.plotly_chart(fig01, use_container_width=False, key='fig01')
+        with CC:
             # define a name 
             with st.form("f02", border=False, clear_on_submit=True, enter_to_submit=False):
-                c1, c2, c3 = st.columns(3)  
-                with c1:
+                # c1, c2, c3 = st.columns(3)  
+                # with c1:
                     distr_name = st.text_input(key = "k013", label = "Give a name:", value = "") 
-                with c2: 
+                # with c2: 
                     st.text("") 
                     st.text("")   
                     submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = False)  
@@ -64,51 +69,48 @@ def select_distr_param():
                             # get numerical index of newly created scenario name - needed to update defaults of st.selectbox()
                             ss['num_index_sce'] = np.where([a==distr_name for a in ss['stored_distr_parameters'].keys()])[0].item()
 
-        with CB:
-            st.text("Preview:")
-        with CC:
-            fig01 = plot_scenarios(scenarios_di = sce_temp, width = 450, height = 350)
-            st.plotly_chart(fig01, use_container_width=False, key='fig01')
+
 
       
 
-
+# @st.fragment
 def select_stored_scenario():
     with st.expander("Run simulations", expanded=True):
-        CA, _, CB, CC = st.columns([0.45, 0.15, 0.05, 0.30])
+        CA, CB, CC = st.columns([0.70, 0.30, 0.20])
         with CA:
-            coa, cob = st.columns([0.50, 0.50])
+            coa, cob = st.columns([0.25, 0.50])
             _ = coa.selectbox('Select a scenario', index=ss['num_index_sce'], options = ss['stored_distr_parameters'].keys(), key = "wid02", on_change = update_ss, args=["wid02", "par02"])  
 
             if not ss["upar"]["par02"] == 'initial': 
                 nnoi_ops = 2**np.arange(0,13,1)
-                _ = st.segmented_control("Nb pure-noise-features", options=nnoi_ops, selection_mode="multi", 
+                _ = cob.segmented_control("Nb pure-noise-features", options=nnoi_ops, selection_mode="multi", 
                                          default = ss["upar"]["par03"],  key="wid03", on_change=update_ss, args=["wid03", "par03"],)
                 coa, cob = st.columns([0.50, 0.50])
                 _ = coa.select_slider("RFO max features", options=np.arange(1,31,1), value=ss["upar"]["par04"], key="wid04", on_change=update_ss, args=["wid04", "par04"],)
                 _ = cob.slider("RFO nb trees", min_value=1, max_value=30, value=ss["upar"]["par05"], step=1, key="wid05", on_change=update_ss, args=["wid05", "par05"],)
-                                
-                with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
-                    coa, cob = st.columns([0.20, 0.50])
-                    message01 = "New dataset sampled from scenario at each run to create Monte-Carlo replicates of same scenario"
-                    submitted3 = coa.form_submit_button("Start simulation", type="primary", use_container_width = False, help=message01) 
-                    if submitted3:
-                        resu01 = evaluate_scenarios_rfo(sce = ss['stored_distr_parameters'][ss["upar"]["par02"]], 
-                            nb_noisy_features = ss["upar"]["par03"],  
-                            rfo_max_features = ss["upar"]["par04"], 
-                            ntrees = ss["upar"]["par05"], 
-                            )
-                        # include some metadata and scenario
-                        df = resu01['df_result']
-                        df['scenario'] = ss["upar"]["par02"]
-                        df['run_id'] = ss['run_nb']
-                        ss['run_nb'] += 1
-                        ss['resu'].append(df)
+
+                with CC:                        
+                    with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
+                        # coa, cob = st.columns([0.20, 0.50])
+                        message01 = "New dataset sampled from scenario at each run to create Monte-Carlo replicates of same scenario"
+                        submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = False, help=message01) 
+                        if submitted3:
+                            resu01 = evaluate_scenarios_rfo(sce = ss['stored_distr_parameters'][ss["upar"]["par02"]], 
+                                nb_noisy_features = ss["upar"]["par03"],  
+                                rfo_max_features = ss["upar"]["par04"], 
+                                ntrees = ss["upar"]["par05"], 
+                                )
+                            # include some metadata and scenario
+                            df = resu01['df_result']
+                            df['scenario'] = ss["upar"]["par02"]
+                            df['run_id'] = ss['run_nb']
+                            ss['run_nb'] += 1
+                            ss['resu'].append(df)
+      
         with CB:
-            st.text("Selected:")
-        with CC:
             if not ss["upar"]["par02"] == 'initial': 
-                fig00 = plot_scenarios(scenarios_di = ss['stored_distr_parameters'][ss["upar"]["par02"]], width = 450, height = 350, tit_str = ss["upar"]["par02"])
+                fig00 = plot_scenarios(scenarios_di = ss['stored_distr_parameters'][ss["upar"]["par02"]], width = 350, height = 270, 
+                                       margin_r=60, margin_t=30, tit_str = ss["upar"]["par02"])
                 st.plotly_chart(fig00, use_container_width=False, key='fig00')
 
 

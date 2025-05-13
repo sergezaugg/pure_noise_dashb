@@ -23,7 +23,6 @@ if len(ss['resu']) > 0:
             _ = st.slider("Width",  min_value=100, max_value=1500, value=ss["upar"]["par10"], step=100, key="wid10", on_change=update_ss, args=["wid10", "par10"])
             _ = st.slider("Height", min_value=100, max_value=1500, value=ss["upar"]["par11"], step=100, key="wid11", on_change=update_ss, args=["wid11", "par11"])
 
-display_stored_distributions(num_cols = 4, dict_of_distr_params = ss['stored_distr_parameters'])
 
     
 

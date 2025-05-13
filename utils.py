@@ -94,7 +94,7 @@ def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features):
 
 
 @st.cache_data
-def plot_scenarios(scenarios_di, width = 450, height = 450, tit_str = ""):
+def plot_scenarios(scenarios_di, width = 450, height = 450, tit_str = "", margin_r=150, margin_t=40):
     """
     """
     # tit_str = 'Class A: N=' + str(scenarios_di['n1']) + '   Class B: N=' + str(scenarios_di['n2'])
@@ -114,7 +114,7 @@ def plot_scenarios(scenarios_di, width = 450, height = 450, tit_str = ""):
     _ = fig1.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig1.update_traces(marker={'size': 2})
     _ = fig1.update_layout(paper_bgcolor="#002240")
-    _ = fig1.update_layout(margin=dict(r=150, t=40 ))
+    _ = fig1.update_layout(margin=dict(r=margin_r, t=margin_t ))
     _ = fig1.update_layout(legend=dict(yanchor="top", y=0.9, xanchor="left", x=1.1)) 
     # fig1.show()
     return(fig1)    
