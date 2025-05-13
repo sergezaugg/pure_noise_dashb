@@ -76,7 +76,7 @@ pg = st.navigation(pages)
 pg.run()
 
 with st.sidebar:
-    st.text("v0.6.0 - under devel")
+    st.text("v0.7.0 - under devel")
     st.markdown(''':blue[QUICK GUIDE]''')
     st.text("(1) Define distributional scenarios")
     st.text("(2) Run simulations")
