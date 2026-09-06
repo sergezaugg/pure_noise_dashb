@@ -76,10 +76,23 @@ pg = st.navigation(pages)
 pg.run()
 
 with st.sidebar:
-    st.text("v0.7.0 - under devel")
+    # st.text("v0.7.1 - under devel")
     st.markdown(''':blue[QUICK GUIDE]''')
     st.text("(1) Define distributional scenarios")
     st.text("(2) Run simulations")
     st.text("(3) Check the plotted results")
     st.title(""); st.title(""); st.title(""); 
     st.title(""); st.title("")
+
+    # logos an links
+    st.header("");st.header("");st.header("")
+    st.header("");st.header("");st.header("")
+    c1,c2=st.columns([80,200])
+    c1.text("")
+    c1.image(image='pics/z_logo_blue.png', width=65)
+    c2.markdown(''':primary[v0.7.1]  
+    :primary[Created by]
+    :primary[[Serge Zaugg](https://www.linkedin.com/in/dkifh34rtn345eb5fhrthdbgf45)   ]
+    :primary[[Pollito-ML](https://github.com/sergezaugg)]
+    ''')
+    st.logo(image='pics/z_logo_blue.png', size="large", link="https://github.com/sergezaugg")
