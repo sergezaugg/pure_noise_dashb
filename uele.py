@@ -100,8 +100,8 @@ def select_stored_scenario():
                 with CC:                        
                     with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
                         # coa, cob = st.columns([0.20, 0.50])
-                        message01 = "New dataset sampled from scenario at each run to create Monte-Carlo replicates of same scenario"
-                        submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = False, help=message01) 
+                        # message01 = "New dataset sampled from scenario at each run to create Monte-Carlo replicates of same scenario"
+                        submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = False) 
                         if submitted3:
                             resu01 = evaluate_scenarios_rfo(sce = ss['stored_distr_parameters'][ss["upar"]["par02"]],   
                                 test_prop = ss["upar"] ["test_size_prop"],
