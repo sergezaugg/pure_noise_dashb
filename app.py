@@ -7,14 +7,34 @@
 import streamlit as st
 from streamlit import session_state as ss
 import numpy as np
+from resources.styles import apply_global_styles
+
+st.set_page_config(layout="wide", initial_sidebar_state="expanded", page_title="pure-noise-features", page_icon='pics/z_logo_violet.png')
+apply_global_styles() # apply custom CSS styles 
+
+# add main title in top bar via CSS 
+st.markdown("""
+<style>
+    .app-title {
+        position: fixed;
+        top: +13px;  /* decrease to move up */
+        font-size: 27px;
+        font-weight: 600;
+        color: #a064ff;
+        z-index: 999999;
+        pointer-events: none;
+    }
+</style>
+<div class="app-title">Impact of pure-noise-features on predictive performance of ML models</div>
+""", unsafe_allow_html=True)
 
 # (1) ---------------------
 # set initial session state
 
 # set initial scenario parameters 
 init_distr =  {
-    'n1' : 2000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.0,
-    'n2' : 2000, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : 0.0,
+    'n1' : 2000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.9,
+    'n2' : 2000, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : -0.9,
     }
 if 'distr' not in ss:
     ss['distr'] = init_distr
@@ -62,13 +82,11 @@ if 'sce_counter' not in ss:
 # -------------------
 # (2) main navigation
 
-st.set_page_config(layout="wide")
- 
 pages = [
-    st.Page("st_page_01.py",  title="Simulate"),
-    st.Page("st_page_02.py", title="Stored scenarios"),
-    st.Page("st_page_00.py",  title="Summary"),
-    st.Page("st_page_03.py",  title="Settings"),
+    st.Page("pages/page_simulate.py",  title="Simulate"),
+    st.Page("pages/page_storage.py", title="Stored scenarios"),
+    st.Page("pages/page_ml_summary.py",  title="Summary"),
+    st.Page("pages/page_settings.py",  title="Settings"),
     ]
 
 pg = st.navigation(pages)
@@ -76,7 +94,7 @@ pg = st.navigation(pages)
 pg.run()
 
 with st.sidebar:
-    st.markdown(''':blue[QUICK GUIDE]''')
+    st.markdown(''':primary[QUICK GUIDE]''')
     st.text("(1) Define distributional scenarios")
     st.text("(2) Run simulations")
     st.text("(3) Check the plotted results")
@@ -88,10 +106,5 @@ with st.sidebar:
     st.header("");st.header("");st.header("")
     c1,c2=st.columns([80,200])
     c1.text("")
-    c1.image(image='pics/z_logo_blue.png', width=65)
-    c2.markdown(''':primary[v0.7.2]  
-    :primary[Created by]
-    :primary[[Serge Zaugg](https://www.linkedin.com/in/dkifh34rtn345eb5fhrthdbgf45)   ]
-    :primary[[Pollito-ML](https://github.com/sergezaugg)]
-    ''')
-    st.logo(image='pics/z_logo_blue.png', size="large", link="https://github.com/sergezaugg")
+
+    st.logo(image='pics/z_logo_violet.png', size="large", link="https://github.com/sergezaugg")

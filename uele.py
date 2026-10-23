@@ -52,7 +52,7 @@ def select_distr_param():
                 # with c2: 
                     st.text("") 
                     st.text("")   
-                    submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = False)  
+                    submitted_1 = st.form_submit_button("Store scenario", type="secondary", use_container_width = False)  
                     if len(distr_name) < 3:
                         st.text("Name must contain at least 3 charters")  
                     else:    
@@ -70,9 +70,6 @@ def select_distr_param():
                             # get numerical index of newly created scenario name - needed to update defaults of st.selectbox()
                             ss['num_index_sce'] = np.where([a==distr_name for a in ss['stored_distr_parameters'].keys()])[0].item()
 
-
-
-      
 
 # @st.fragment
 def select_stored_scenario():
@@ -101,7 +98,7 @@ def select_stored_scenario():
                     with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
                         # coa, cob = st.columns([0.20, 0.50])
                         # message01 = "New dataset sampled from scenario at each run to create Monte-Carlo replicates of same scenario"
-                        submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = False) 
+                        submitted3 = st.form_submit_button("Start simulation", type="secondary", use_container_width = False) 
                         if submitted3:
                             resu01 = evaluate_scenarios_rfo(sce = ss['stored_distr_parameters'][ss["upar"]["par02"]],   
                                 test_prop = ss["upar"] ["test_size_prop"],
@@ -143,8 +140,8 @@ def make_plot(df, width, height, plotcol_seq02):
         line_group = 'run_id',
         facet_col = 'rfo_max_features',
         facet_row = 'rfo_nb_trees',
-        facet_row_spacing = 0.1, 
-        facet_col_spacing = 0.05,
+        facet_row_spacing = 0.05, 
+        facet_col_spacing = 0.10,
         width = width,
         height = height,
         markers = True,
@@ -157,11 +154,12 @@ def make_plot(df, width, height, plotcol_seq02):
                 'rfo_nb_trees' : "RFO nb trees",
                 }
         )
-    _ = fig03.update_layout(paper_bgcolor="#002240")
+    _ = fig03.update_layout(paper_bgcolor="#000000")
     _ = fig03.update_layout(yaxis_range=[0.4,1.05])
-    # _ = fig03.update_layout(xaxis_title="Nb of pure-noise-features", yaxis_title="ROC-AUC")
-    # _ = fig03.update_layout(font=dict(size=28))
-    st.plotly_chart(fig03, use_container_width=False, key='fig03')
+    _ = fig03.update_xaxes(showline = True, linecolor = 'white', linewidth = 1, mirror = True)
+    _ = fig03.update_yaxes(showline = True, linecolor = 'white', linewidth = 1, mirror = True)
+    _ = fig03.update_layout(margin=dict(l=60, r=30, t=50, b=50))
+    st.plotly_chart(fig03, use_container_width=True, key='fig03')
 
 
 @st.cache_data
