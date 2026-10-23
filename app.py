@@ -67,10 +67,10 @@ if 'sce_counter' not in ss:
 # (2) main navigation
 
 pages = [
-    st.Page("st_page_01.py",  title="Simulate"),
-    st.Page("st_page_02.py", title="Stored scenarios"),
-    st.Page("st_page_00.py",  title="Summary"),
-    st.Page("st_page_03.py",  title="Settings"),
+    st.Page("pages/page_01.py",  title="Simulate"),
+    st.Page("pages/page_02.py", title="Stored scenarios"),
+    st.Page("pages/page_00.py",  title="Summary"),
+    st.Page("pages/page_03.py",  title="Settings"),
     ]
 
 pg = st.navigation(pages)

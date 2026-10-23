@@ -11,7 +11,6 @@ with col_a:
 
     with st.container(border=True):
         st.title(":violet[Impact of pure-noise-features on predictive performance]") 
-        st.page_link("st_page_01.py", label="LINK : Interactive dashboard")
 
     st.markdown('''   
     :violet[**INTRODUCTION**]
