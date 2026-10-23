@@ -10,11 +10,11 @@ col_a, col_space01 = st.columns([0.60, 0.40])
 with col_a:
 
     with st.container(border=True):
-        st.title(":blue[Impact of pure-noise-features on predictive performance]") 
+        st.title(":violet[Impact of pure-noise-features on predictive performance]") 
         st.page_link("st_page_01.py", label="LINK : Interactive dashboard")
 
     st.markdown('''   
-    :blue[**INTRODUCTION**]
+    :violet[**INTRODUCTION**]
     
     In supervised classification applications, many features are often available but not all may be needed.
     Detecting and excluding non-informative features is less trivial than it seems.
@@ -23,7 +23,7 @@ with col_a:
     ''')
 
     st.markdown(''' 
-    :blue[**METHODS**]
+    :violet[**METHODS**]
                             
     A binary class variable and two features that inform classification are created.
     Many additional pure-noise-features can be included in the feature space.
@@ -34,7 +34,7 @@ with col_a:
     ''')
 
     st.markdown(''' 
-    :blue[**DETAILED GUIDE**]''')
+    :violet[**DETAILED GUIDE**]''')
 
     st.markdown('''   
     In the top tab you can define multiple distributional scenarios for two classes and store each with a custom name.

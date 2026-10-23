@@ -7,6 +7,10 @@
 import streamlit as st
 from streamlit import session_state as ss
 import numpy as np
+from resources.styles import apply_global_styles
+
+st.set_page_config(layout="wide", initial_sidebar_state="expanded", page_title="pure-noise-features", page_icon='pics/z_logo_violet.png')
+apply_global_styles() # apply custom CSS styles 
 
 # (1) ---------------------
 # set initial session state
@@ -62,8 +66,6 @@ if 'sce_counter' not in ss:
 # -------------------
 # (2) main navigation
 
-st.set_page_config(layout="wide")
- 
 pages = [
     st.Page("st_page_01.py",  title="Simulate"),
     st.Page("st_page_02.py", title="Stored scenarios"),
@@ -76,7 +78,7 @@ pg = st.navigation(pages)
 pg.run()
 
 with st.sidebar:
-    st.markdown(''':blue[QUICK GUIDE]''')
+    st.markdown(''':violet[QUICK GUIDE]''')
     st.text("(1) Define distributional scenarios")
     st.text("(2) Run simulations")
     st.text("(3) Check the plotted results")
@@ -88,10 +90,5 @@ with st.sidebar:
     st.header("");st.header("");st.header("")
     c1,c2=st.columns([80,200])
     c1.text("")
-    c1.image(image='pics/z_logo_blue.png', width=65)
-    c2.markdown(''':primary[v0.7.2]  
-    :primary[Created by]
-    :primary[[Serge Zaugg](https://www.linkedin.com/in/dkifh34rtn345eb5fhrthdbgf45)   ]
-    :primary[[Pollito-ML](https://github.com/sergezaugg)]
-    ''')
-    st.logo(image='pics/z_logo_blue.png', size="large", link="https://github.com/sergezaugg")
+
+    st.logo(image='pics/z_logo_violet.png', size="large", link="https://github.com/sergezaugg")
