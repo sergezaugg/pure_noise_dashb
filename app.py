@@ -17,8 +17,8 @@ apply_global_styles() # apply custom CSS styles
 
 # set initial scenario parameters 
 init_distr =  {
-    'n1' : 2000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.0,
-    'n2' : 2000, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : 0.0,
+    'n1' : 2000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : 0.9,
+    'n2' : 2000, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : -0.9,
     }
 if 'distr' not in ss:
     ss['distr'] = init_distr
@@ -67,10 +67,10 @@ if 'sce_counter' not in ss:
 # (2) main navigation
 
 pages = [
-    st.Page("pages/page_01.py",  title="Simulate"),
-    st.Page("pages/page_02.py", title="Stored scenarios"),
-    st.Page("pages/page_00.py",  title="Summary"),
-    st.Page("pages/page_03.py",  title="Settings"),
+    st.Page("pages/page_simulate.py",  title="Simulate"),
+    st.Page("pages/page_storage.py", title="Stored scenarios"),
+    st.Page("pages/page_ml_summary.py",  title="Summary"),
+    st.Page("pages/page_settings.py",  title="Settings"),
     ]
 
 pg = st.navigation(pages)

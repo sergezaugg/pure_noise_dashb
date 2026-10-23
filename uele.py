@@ -52,7 +52,7 @@ def select_distr_param():
                 # with c2: 
                     st.text("") 
                     st.text("")   
-                    submitted_1 = st.form_submit_button("Store scenario", type="primary", use_container_width = False)  
+                    submitted_1 = st.form_submit_button("Store scenario", type="secondary", use_container_width = False)  
                     if len(distr_name) < 3:
                         st.text("Name must contain at least 3 charters")  
                     else:    
@@ -70,9 +70,6 @@ def select_distr_param():
                             # get numerical index of newly created scenario name - needed to update defaults of st.selectbox()
                             ss['num_index_sce'] = np.where([a==distr_name for a in ss['stored_distr_parameters'].keys()])[0].item()
 
-
-
-      
 
 # @st.fragment
 def select_stored_scenario():
@@ -101,7 +98,7 @@ def select_stored_scenario():
                     with st.form("f03", border=False, clear_on_submit=True, enter_to_submit=False):
                         # coa, cob = st.columns([0.20, 0.50])
                         # message01 = "New dataset sampled from scenario at each run to create Monte-Carlo replicates of same scenario"
-                        submitted3 = st.form_submit_button("Start simulation", type="primary", use_container_width = False) 
+                        submitted3 = st.form_submit_button("Start simulation", type="secondary", use_container_width = False) 
                         if submitted3:
                             resu01 = evaluate_scenarios_rfo(sce = ss['stored_distr_parameters'][ss["upar"]["par02"]],   
                                 test_prop = ss["upar"] ["test_size_prop"],
