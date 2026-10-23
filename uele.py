@@ -140,8 +140,8 @@ def make_plot(df, width, height, plotcol_seq02):
         line_group = 'run_id',
         facet_col = 'rfo_max_features',
         facet_row = 'rfo_nb_trees',
-        facet_row_spacing = 0.1, 
-        facet_col_spacing = 0.05,
+        facet_row_spacing = 0.05, 
+        facet_col_spacing = 0.10,
         width = width,
         height = height,
         markers = True,
@@ -154,11 +154,12 @@ def make_plot(df, width, height, plotcol_seq02):
                 'rfo_nb_trees' : "RFO nb trees",
                 }
         )
-    _ = fig03.update_layout(paper_bgcolor="#002240")
+    _ = fig03.update_layout(paper_bgcolor="#000000")
     _ = fig03.update_layout(yaxis_range=[0.4,1.05])
-    # _ = fig03.update_layout(xaxis_title="Nb of pure-noise-features", yaxis_title="ROC-AUC")
-    # _ = fig03.update_layout(font=dict(size=28))
-    st.plotly_chart(fig03, use_container_width=False, key='fig03')
+    _ = fig03.update_xaxes(showline = True, linecolor = 'white', linewidth = 1, mirror = True)
+    _ = fig03.update_yaxes(showline = True, linecolor = 'white', linewidth = 1, mirror = True)
+    _ = fig03.update_layout(margin=dict(l=60, r=30, t=50, b=50))
+    st.plotly_chart(fig03, use_container_width=True, key='fig03')
 
 
 @st.cache_data

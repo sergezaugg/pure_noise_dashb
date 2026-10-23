@@ -12,6 +12,22 @@ from resources.styles import apply_global_styles
 st.set_page_config(layout="wide", initial_sidebar_state="expanded", page_title="pure-noise-features", page_icon='pics/z_logo_violet.png')
 apply_global_styles() # apply custom CSS styles 
 
+# add main title in top bar via CSS 
+st.markdown("""
+<style>
+    .app-title {
+        position: fixed;
+        top: +13px;  /* decrease to move up */
+        font-size: 27px;
+        font-weight: 600;
+        color: #a064ff;
+        z-index: 999999;
+        pointer-events: none;
+    }
+</style>
+<div class="app-title">Impact of pure-noise-features on predictive performance of ML models</div>
+""", unsafe_allow_html=True)
+
 # (1) ---------------------
 # set initial session state
 
@@ -78,7 +94,7 @@ pg = st.navigation(pages)
 pg.run()
 
 with st.sidebar:
-    st.markdown(''':violet[QUICK GUIDE]''')
+    st.markdown(''':primary[QUICK GUIDE]''')
     st.text("(1) Define distributional scenarios")
     st.text("(2) Run simulations")
     st.text("(3) Check the plotted results")

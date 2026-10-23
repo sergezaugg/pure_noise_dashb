@@ -112,7 +112,7 @@ def plot_scenarios(scenarios_di, colors, width = 450, height = 450, tit_str = ""
     _ = fig1.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig1.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig1.update_traces(marker={'size': 2})
-    _ = fig1.update_layout(paper_bgcolor="#002240")
+    _ = fig1.update_layout(paper_bgcolor="#000000")
     _ = fig1.update_layout(margin=dict(r=margin_r, t=margin_t ))
     _ = fig1.update_layout(legend=dict(yanchor="top", y=0.9, xanchor="left", x=1.1)) 
     # fig1.show()
